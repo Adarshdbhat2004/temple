@@ -106,7 +106,7 @@ body{
     box-shadow: 0 6px 16px rgba(255, 122, 0, 0.3);
 }
 
-/* POPUP MODAL (MOBILE FIRST) */
+/* POPUP MODAL (MOBILE FIRST FIXED) */
 .popup{
     width: 100%;
     height: 100vh;
@@ -117,13 +117,13 @@ body{
     backdrop-filter: blur(4px);
     display: none;
     justify-content: center;
-    align-items: flex-end; /* Slides up from bottom on mobile */
+    align-items: flex-end; 
     z-index: 1000;
 }
 
 @media(min-width: 576px) {
     .popup {
-        align-items: center; /* Centered on desktop */
+        align-items: center; 
         padding: 20px;
     }
 }
@@ -134,9 +134,9 @@ body{
     max-width: 500px;
     border-top-left-radius: var(--radius-lg);
     border-top-right-radius: var(--radius-lg);
-    padding: 24px;
-    max-height: 90vh;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    max-height: 85vh; /* Prevents leaking off viewport bounds */
     box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
     animation: slideUp 0.3s ease-out;
 }
@@ -144,7 +144,7 @@ body{
 @media(min-width: 576px) {
     .popup-content {
         border-radius: var(--radius-lg);
-        max-height: 85vh;
+        max-height: 80vh;
     }
 }
 
@@ -157,8 +157,7 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 12px;
+    padding: 20px 24px 12px 24px;
     border-bottom: 1px solid #EEE;
 }
 
@@ -180,6 +179,20 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* SCROLLABLE SCENE BODY */
+.popup-body {
+    padding: 0 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* STICKY BOTTOM ACTIONS TO ENSURE VISIBILITY */
+.popup-footer {
+    padding: 16px 24px 28px 24px; /* Added heavy padding safe zone for mobile system touch bars */
+    background: white;
+    border-top: 1px solid #EEE;
 }
 
 /* MODERN FORM ELEMENTS */
@@ -241,6 +254,7 @@ input:focus, select:focus{
     width: 100%;
     padding: 14px;
     margin-top: 16px;
+    margin-bottom: 20px; /* Spacing layout gap before scrolling finishes */
     background: white;
     color: var(--primary);
     border: 2px dashed var(--primary-border);
@@ -259,7 +273,6 @@ input:focus, select:focus{
 .submit-btn{
     width: 100%;
     padding: 16px;
-    margin-top: 24px;
     background: #25D366; /* WhatsApp Green */
     color: white;
     border: none;
@@ -310,80 +323,85 @@ input:focus, select:focus{
 <div class="popup" id="popup">
     <div class="popup-content">
         <div class="popup-header">
-            <div class="popup-title">ಪೂಜೆ </div>
+            <div class="popup-title">ಪೂಜೆ</div>
             <button class="close-x-btn" onclick="closePopup()">✕</button>
         </div>
 
-        <!-- POOJA SELECTION -->
-        <label for="pooja">ಪೂಜೆ ಆಯ್ಕೆ ಮಾಡಿ</label>
-        <select id="pooja">
-            <option value="ಕುಂಕುಮ ಅರ್ಚನೆ - ₹150">ಕುಂಕುಮ ಅರ್ಚನೆ - ₹150</option>
-            <option value="ರುದ್ರಾಭಿಷೇಕ - ₹500">ರುದ್ರಾಭಿಷೇಕ - ₹500</option>
-            <option value="ಪಂಚಾಮೃತ ಅಭಿಷೇಕ - ₹350">ಪಂಚಾಮೃತ ಅಭಿಷೇಕ - ₹350</option>
-            <option value="ಏಕಾದಶಿ ರುದ್ರ - ₹1500">ಏಕಾದಶಿ ರುದ್ರ - ₹1500</option>
-            <option value="ಮಹಾಪೂಜೆ - ₹1000">ಮಹಾಪೂಜೆ - ₹1000</option>
-        </select>
+        <!-- SCROLLABLE CONTAINER FOR FORM FIELDS -->
+        <div class="popup-body">
+            <!-- POOJA SELECTION -->
+            <label for="pooja">ಪೂಜೆ ಆಯ್ಕೆ ಮಾಡಿ</label>
+            <select id="pooja">
+                <option value="ಕುಂಕುಮ ಅರ್ಚನೆ - ₹150">ಕುಂಕುಮ ಅರ್ಚನೆ - ₹150</option>
+                <option value="ರುದ್ರಾಭಿಷೇಕ - ₹500">ರುದ್ರಾಭಿಷೇಕ - ₹500</option>
+                <option value="ಪಂಚಾಮೃತ ಅಭಿಷೇಕ - ₹350">ಪಂಚಾಮೃತ ಅಭಿಷೇಕ - ₹350</option>
+                <option value="ಏಕಾದಶಿ ರುದ್ರ - ₹1500">ಏಕಾದಶಿ ರುದ್ರ - ₹1500</option>
+                <option value="ಮಹಾಪೂಜೆ - ₹1000">ಮಹಾಪೂಜೆ - ₹1000</option>
+            </select>
 
-        <!-- DATE / CALENDAR SELECTION -->
-        <label for="poojaDate">ಪೂಜೆ ದಿನಾಂಕ ಆಯ್ಕೆ ಮಾಡಿ</label>
-        <input type="date" id="poojaDate" required>
+            <!-- DATE / CALENDAR SELECTION -->
+            <label for="poojaDate">ಪೂಜೆ ದಿನಾಂಕ ಆಯ್ಕೆ ಮಾಡಿ</label>
+            <input type="date" id="poojaDate" required>
 
-        <!-- PERSON LIST -->
-        <div id="personContainer">
-            <div class="person" id="personBlock_1">
-                <div class="person-header">
-                    <span>ವ್ಯಕ್ತಿ 1</span>
+            <!-- PERSON LIST -->
+            <div id="personContainer">
+                <div class="person" id="personBlock_1">
+                    <div class="person-header">
+                        <span>ವ್ಯಕ್ತಿ 1</span>
+                    </div>
+                    
+                    <label>ಹೆಸರು</label>
+                    <input type="text" class="name" placeholder="ಹೆಸರು ನಮೂದಿಸಿ">
+
+                    <label>ರಾಶಿ <span class="optional">(optional)</span></label>
+                    <select class="rashi">
+                        <option value="ತಿಳಿಸಿಲ್ಲ">ಆಯ್ಕೆ ಮಾಡಿ</option>
+                        <option>ಮೇಷ</option>
+                        <option>ವೃಷಭ</option>
+                        <option>ಮಿಥುನ</option>
+                        <option>ಕಟಕ</option>
+                        <option>ಸಿಂಹ</option>
+                        <option>ಕನ್ಯಾ</option>
+                        <option>ತುಲಾ</option>
+                        <option>ವೃಶ್ಚಿಕ</option>
+                        <option>ಧನು</option>
+                        <option>ಮಕರ</option>
+                        <option>ಕುಂಭ</option>
+                        <option>ಮೀನ</option>
+                    </select>
+
+                    <label>ನಕ್ಷತ್ರ <span class="optional">(optional)</span></label>
+                    <select class="nakshatra">
+                        <option value="ತಿಳಿಸಿಲ್ಲ">ಆಯ್ಕೆ ಮಾಡಿ</option>
+                        <option>ಅಶ್ವಿನಿ</option>
+                        <option>ಭರಣಿ</option>
+                        <option>ಕೃತಿಕಾ</option>
+                        <option>ರೋಹಿಣಿ</option>
+                        <option>ಮೃಗಶಿರ</option>
+                        <option>ಆರ್ದ್ರ</option>
+                        <option>ಪುನರ್ವಸು</option>
+                        <option>ಪುಷ್ಯ</option>
+                        <option>ಮಘಾ</option>
+                        <option>ಹಸ್ತ</option>
+                        <option>ಸ್ವಾತಿ</option>
+                        <option>ಅನುರಾಧಾ</option>
+                    </select>
                 </div>
-                
-                <label>ಹೆಸರು</label>
-                <input type="text" class="name" placeholder="ಹೆಸರು ನಮೂದಿಸಿ">
-
-                <label>ರಾಶಿ <span class="optional">(optional)</span></label>
-                <select class="rashi">
-                    <option value="ತಿಳಿಸಿಲ್ಲ">ಆಯ್ಕೆ ಮಾಡಿ</option>
-                    <option>ಮೇಷ</option>
-                    <option>ವೃಷಭ</option>
-                    <option>ಮಿಥುನ</option>
-                    <option>ಕಟಕ</option>
-                    <option>ಸಿಂಹ</option>
-                    <option>ಕನ್ಯಾ</option>
-                    <option>ತುಲಾ</option>
-                    <option>ವೃಶ್ಚಿಕ</option>
-                    <option>ಧನು</option>
-                    <option>ಮಕರ</option>
-                    <option>ಕುಂಭ</option>
-                    <option>ಮೀನ</option>
-                </select>
-
-                <label>ನಕ್ಷತ್ರ <span class="optional">(optional)</span></label>
-                <select class="nakshatra">
-                    <option value="ತಿಳಿಸಿಲ್ಲ">ಆಯ್ಕೆ ಮಾಡಿ</option>
-                    <option>ಅಶ್ವಿನಿ</option>
-                    <option>ಭರಣಿ</option>
-                    <option>ಕೃತಿಕಾ</option>
-                    <option>ರೋಹಿಣಿ</option>
-                    <option>ಮೃಗಶಿರ</option>
-                    <option>ಆರ್ದ್ರ</option>
-                    <option>ಪುನರ್ವಸು</option>
-                    <option>ಪುಷ್ಯ</option>
-                    <option>ಮಘಾ</option>
-                    <option>ಹಸ್ತ</option>
-                    <option>ಸ್ವಾತಿ</option>
-                    <option>ಅನುರಾಧಾ</option>
-                </select>
             </div>
+
+            <!-- ADD BUTTON -->
+            <button class="add-btn" onclick="addPerson()">
+                + ಇನ್ನೊಬ್ಬರನ್ನು ಸೇರಿಸಿ
+            </button>
         </div>
 
-        <!-- ADD BUTTON -->
-        <button class="add-btn" onclick="addPerson()">
-            + ಇನ್ನೊಬ್ಬರನ್ನು ಸೇರಿಸಿ
-        </button>
-
-        <!-- SUBMIT -->
-        <button class="submit-btn" onclick="sendWhatsApp()">
-            <svg style="width:20px;height:20px;fill:currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.6.95 3.488 1.449 5.413 1.451 5.428 0 9.845-4.414 9.848-9.842.002-2.63-1.023-5.101-2.884-6.964C17.16 1.936 14.685 1.1 12.006 1.1c-5.432 0-9.851 4.415-9.854 9.845-.001 1.922.501 3.799 1.458 5.404L2.662 21.3l5.004-1.314-.019-.032zM17.44 14.93c-.3-.149-1.77-.874-2.043-.974-.274-.1-.474-.149-.674.149-.2.3-.773.974-.948 1.174-.175.2-.35.225-.65.075-1.02-.513-1.861-.944-2.585-1.57-.611-.528-1.018-1.18-1.138-1.381-.12-.2-.013-.308.087-.407.091-.089.2-.23.3-.346.1-.115.133-.198.2-.329.066-.134.034-.251-.017-.35-.05-.1-.474-1.144-.65-1.564-.171-.414-.343-.358-.474-.364-.121-.005-.26-.006-.4-.006s-.369.052-.562.26c-.193.207-.738.722-.738 1.761s.756 2.04 1.861 2.522c1.105.482 1.919 1.816 3.411 2.46.36.155.721.215 1.058.118.375-.108 1.77-.724 2.02-1.417.249-.693.249-1.288.174-1.415-.074-.124-.273-.223-.573-.372z"/></svg>
-            ವಾಟ್ಸಾಪ್ ಮೂಲಕ ಕಳುಹಿಸಿ
-        </button>
+        <!-- FIXED IMMOVABLE SUBMIT ACTIONS FOOTER -->
+        <div class="popup-footer">
+            <button class="submit-btn" onclick="sendWhatsApp()">
+                <svg style="width:20px;height:20px;fill:currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.6.95 3.488 1.449 5.413 1.451 5.428 0 9.845-4.414 9.848-9.842.002-2.63-1.023-5.101-2.884-6.964C17.16 1.936 14.685 1.1 12.006 1.1c-5.432 0-9.851 4.415-9.854 9.845-.001 1.922.501 3.799 1.458 5.404L2.662 21.3l5.004-1.314-.019-.032zM17.44 14.93c-.3-.149-1.77-.874-2.043-.974-.274-.1-.474-.149-.674.149-.2.3-.773.974-.948 1.174-.175.2-.35.225-.65.075-1.02-.513-1.861-.944-2.585-1.57-.611-.528-1.018-1.18-1.138-1.381-.12-.2-.013-.308.087-.407.091-.089.2-.23.3-.346.1-.115.133-.198.2-.329.066-.134.034-.251-.017-.35-.05-.1-.474-1.144-.65-1.564-.171-.414-.343-.358-.474-.364-.121-.005-.26-.006-.4-.006s-.369.052-.562.26c-.193.207-.738.722-.738 1.761s.756 2.04 1.861 2.522c1.105.482 1.919 1.816 3.411 2.46.36.155.721.215 1.058.118.375-.108 1.77-.724 2.02-1.417.249-.693.249-1.288.174-1.415-.074-.124-.273-.223-.573-.372z"/></svg>
+                ವಾಟ್ಸಾಪ್ ಮೂಲಕ ಕಳುಹಿಸಿ
+            </button>
+        </div>
     </div>
 </div>
 
@@ -447,7 +465,7 @@ function addPerson(){
         <select class="nakshatra">
             <option value="ತಿಳಿಸಿಲ್ಲ">ಆಯ್ಕೆ ಮಾಡಿ</option>
             <option>ಅಶ್ವಿನಿ</option>
-            <option>ಭರಣಿ</option>
+            <option>ഭരണိ</option>
             <option>ಕೃತಿಕಾ</option>
             <option>ರೋಹಿಣಿ</option>
             <option>ಮೃಗಶಿರ</option>
