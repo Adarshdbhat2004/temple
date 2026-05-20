@@ -2,7 +2,7 @@
 <html lang="kn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>ದೇವಸ್ಥಾನ ಪೂಜೆ ಬುಕ್ಕಿಂಗ್</title>
 
 <style>
@@ -14,8 +14,8 @@
     --dark: #2D3142;
     --gray: #6C757D;
     --light-gray: #F8F9FA;
-    --radius-lg: 20px;
-    --radius-md: 12px;
+    --radius-lg: 24px;
+    --radius-md: 14px;
 }
 
 *{
@@ -29,60 +29,53 @@
 body{
     background: #F4F6F9;
     color: var(--dark);
-    padding: 20px 15px;
+    padding: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
 }
 
-/* MODERN FRONT PAGE CARD */
+/* MAIN CARD */
 .temple-card{
     width: 100%;
-    max-width: 440px;
+    max-width: 400px;
     background: white;
     border-radius: var(--radius-lg);
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(255, 122, 0, 0.08), 0 5px 15px rgba(0, 0, 0, 0.04);
-    border: 1px solid rgba(0, 0, 0, 0.03);
+    box-shadow: 0 10px 30px rgba(255, 122, 0, 0.06), 0 5px 15px rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.02);
 }
 
 .temple-img-wrapper {
     position: relative;
     width: 100%;
-    height: 250px;
-    overflow: hidden;
+    height: 220px;
 }
 
 .temple-img{
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.temple-card:hover .temple-img {
-    transform: scale(1.03);
 }
 
 .card-content{
-    padding: 28px 24px;
+    padding: 24px;
     text-align: center;
 }
 
 .temple-name{
-    font-size: 26px;
+    font-size: 24px;
     color: var(--primary);
     font-weight: 700;
-    letter-spacing: -0.5px;
     line-height: 1.3;
 }
 
 .address{
     color: var(--gray);
-    margin-top: 12px;
+    margin-top: 8px;
     font-size: 15px;
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
 .open-btn{
@@ -92,33 +85,26 @@ body{
     background: var(--primary);
     color: white;
     border-radius: var(--radius-md);
-    margin-top: 24px;
+    margin-top: 20px;
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(255, 122, 0, 0.2);
-    transition: all 0.2s ease;
 }
 
-.open-btn:hover, .open-btn:active{
-    background: var(--primary-hover);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(255, 122, 0, 0.3);
-}
-
-/* POPUP MODAL (MOBILE FIRST FIXED) */
+/* FIXED POPUP FOR MOBILE */
 .popup{
     width: 100%;
-    height: 100vh;
+    height: 100%;
     position: fixed;
     top: 0;
     left: 0;
-    background: rgba(45, 49, 66, 0.5);
+    background: rgba(45, 49, 66, 0.6);
     backdrop-filter: blur(4px);
     display: none;
     justify-content: center;
     align-items: flex-end; 
-    z-index: 1000;
+    z-index: 2000;
 }
 
 @media(min-width: 576px) {
@@ -131,20 +117,20 @@ body{
 .popup-content{
     background: white;
     width: 100%;
-    max-width: 500px;
+    max-width: 460px;
     border-top-left-radius: var(--radius-lg);
     border-top-right-radius: var(--radius-lg);
     display: flex;
     flex-direction: column;
-    max-height: 85vh; /* Prevents leaking off viewport bounds */
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
-    animation: slideUp 0.3s ease-out;
+    max-height: 90vh; /* Keeps it strictly inside viewport */
+    box-shadow: 0 -10px 35px rgba(0,0,0,0.15);
+    animation: slideUp 0.25s ease-out;
 }
 
 @media(min-width: 576px) {
     .popup-content {
         border-radius: var(--radius-lg);
-        max-height: 80vh;
+        max-height: 85vh;
     }
 }
 
@@ -157,13 +143,13 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 24px 12px 24px;
-    border-bottom: 1px solid #EEE;
+    padding: 18px 20px;
+    border-bottom: 1px solid #EAEAEA;
 }
 
 .popup-title{
     color: var(--primary);
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
 }
 
@@ -173,7 +159,7 @@ body{
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    font-size: 18px;
+    font-size: 16px;
     color: var(--dark);
     cursor: pointer;
     display: flex;
@@ -183,53 +169,55 @@ body{
 
 /* SCROLLABLE SCENE BODY */
 .popup-body {
-    padding: 0 24px;
+    padding: 10px 20px;
     overflow-y: auto;
     flex: 1;
+    -webkit-overflow-scrolling: touch;
 }
 
-/* STICKY BOTTOM ACTIONS TO ENSURE VISIBILITY */
+/* CRITICAL FIX: FIXED STICKY FOOTER ZONE */
 .popup-footer {
-    padding: 16px 24px 28px 24px; /* Added heavy padding safe zone for mobile system touch bars */
+    padding: 12px 20px calc(12px + env(safe-area-inset-bottom, 16px)) 20px;
     background: white;
-    border-top: 1px solid #EEE;
+    border-top: 1px solid #EAEAEA;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.03);
 }
 
-/* MODERN FORM ELEMENTS */
+/* CONTAINER FIELDS Styling */
 label{
     font-weight: 600;
     display: block;
-    margin-top: 16px;
+    margin-top: 14px;
     margin-bottom: 6px;
-    font-size: 15px;
+    font-size: 14px;
     color: var(--dark);
 }
 
 input, select{
     width: 100%;
-    padding: 14px;
+    padding: 12px 14px;
     border-radius: var(--radius-md);
-    border: 1.5px solid #E2E8F0;
+    border: 1.5px solid #CBD5E1;
     font-size: 15px;
     background-color: white;
     color: var(--dark);
     outline: none;
     transition: all 0.2s ease;
+    -webkit-appearance: none; /* Uniform styling across iOS/Android */
 }
 
 input:focus, select:focus{
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.15);
+    box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.12);
 }
 
-/* PERSON CONTAINER BLOCK */
+/* PERSON CARDS */
 .person{
-    border: 1.5px solid #E2E8F0;
-    padding: 18px;
+    border: 1px solid #E2E8F0;
+    padding: 16px;
     border-radius: var(--radius-md);
-    margin-top: 16px;
+    margin-top: 14px;
     background: var(--light-gray);
-    position: relative;
 }
 
 .person-header {
@@ -238,7 +226,10 @@ input:focus, select:focus{
     align-items: center;
     font-weight: bold;
     color: var(--gray);
-    font-size: 14px;
+    font-size: 13px;
+    border-bottom: 1px dashed #E2E8F0;
+    padding-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .remove-btn {
@@ -254,7 +245,7 @@ input:focus, select:focus{
     width: 100%;
     padding: 14px;
     margin-top: 16px;
-    margin-bottom: 20px; /* Spacing layout gap before scrolling finishes */
+    margin-bottom: 24px;
     background: white;
     color: var(--primary);
     border: 2px dashed var(--primary-border);
@@ -262,38 +253,34 @@ input:focus, select:focus{
     cursor: pointer;
     font-size: 15px;
     font-weight: 600;
-    transition: all 0.2s ease;
 }
 
-.add-btn:hover {
-    background: var(--primary-light);
-    border-color: var(--primary);
-}
-
+/* IMMOVABLE WHATSAPP BUTTON */
 .submit-btn{
     width: 100%;
-    padding: 16px;
-    background: #25D366; /* WhatsApp Green */
+    padding: 15px;
+    background: #25D366; 
     color: white;
     border: none;
     border-radius: var(--radius-md);
     font-size: 17px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 8px;
 }
 
-.submit-btn:hover {
-    background: #20BA56;
+.submit-btn:active {
+    background: #1EBE52;
+    transform: scale(0.99);
 }
 
 .optional{
     color: var(--gray);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: normal;
     margin-left: 4px;
 }
@@ -323,11 +310,11 @@ input:focus, select:focus{
 <div class="popup" id="popup">
     <div class="popup-content">
         <div class="popup-header">
-            <div class="popup-title">ಪೂಜೆ</div>
+            <div class="popup-title">ವಿವರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ</div>
             <button class="close-x-btn" onclick="closePopup()">✕</button>
         </div>
 
-        <!-- SCROLLABLE CONTAINER FOR FORM FIELDS -->
+        <!-- SCROLLABLE CONTENT BODY -->
         <div class="popup-body">
             <!-- POOJA SELECTION -->
             <label for="pooja">ಪೂಜೆ ಆಯ್ಕೆ ಮಾಡಿ</label>
@@ -339,11 +326,11 @@ input:focus, select:focus{
                 <option value="ಮಹಾಪೂಜೆ - ₹1000">ಮಹಾಪೂಜೆ - ₹1000</option>
             </select>
 
-            <!-- DATE / CALENDAR SELECTION -->
+            <!-- DATE SELECTION -->
             <label for="poojaDate">ಪೂಜೆ ದಿನಾಂಕ ಆಯ್ಕೆ ಮಾಡಿ</label>
             <input type="date" id="poojaDate" required>
 
-            <!-- PERSON LIST -->
+            <!-- PERSON LIST CONTAINER -->
             <div id="personContainer">
                 <div class="person" id="personBlock_1">
                     <div class="person-header">
@@ -351,9 +338,9 @@ input:focus, select:focus{
                     </div>
                     
                     <label>ಹೆಸರು</label>
-                    <input type="text" class="name" placeholder="ಹೆಸರು ನಮೂದಿಸಿ">
+                    <input type="text" class="name" placeholder="ಭಕ್ತಿಯ ಹೆಸರು ನಮೂದಿಸಿ" required>
 
-                    <label>ರಾಶಿ <span class="optional">(optional)</span></label>
+                    <label>ರಾಶಿ <span class="optional">(ಐಚ್ಛಿಕ)</span></label>
                     <select class="rashi">
                         <option value="ತಿಳಿಸಿಲ್ಲ">ಆಯ್ಕೆ ಮಾಡಿ</option>
                         <option>ಮೇಷ</option>
@@ -370,7 +357,7 @@ input:focus, select:focus{
                         <option>ಮೀನ</option>
                     </select>
 
-                    <label>ನಕ್ಷತ್ರ <span class="optional">(optional)</span></label>
+                    <label>ನಕ್ಷತ್ರ <span class="optional">(ಐಚ್ಛಿಕ)</span></label>
                     <select class="nakshatra">
                         <option value="ತಿಳಿಸಿಲ್ಲ">ಆಯ್ಕೆ ಮಾಡಿ</option>
                         <option>ಅಶ್ವಿನಿ</option>
@@ -391,22 +378,21 @@ input:focus, select:focus{
 
             <!-- ADD BUTTON -->
             <button class="add-btn" onclick="addPerson()">
-                + ಇನ್ನೊಬ್ಬರನ್ನು ಸೇರಿಸಿ
+                + ಇನ್ನೊಬ್ಬರ ಹೆಸರು ಸೇರಿಸಿ
             </button>
         </div>
 
-        <!-- FIXED IMMOVABLE SUBMIT ACTIONS FOOTER -->
+        <!-- ALWAYS VISIBLE FIXED FOOTER FOR WHATSAPP BUTTON -->
         <div class="popup-footer">
             <button class="submit-btn" onclick="sendWhatsApp()">
                 <svg style="width:20px;height:20px;fill:currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.6.95 3.488 1.449 5.413 1.451 5.428 0 9.845-4.414 9.848-9.842.002-2.63-1.023-5.101-2.884-6.964C17.16 1.936 14.685 1.1 12.006 1.1c-5.432 0-9.851 4.415-9.854 9.845-.001 1.922.501 3.799 1.458 5.404L2.662 21.3l5.004-1.314-.019-.032zM17.44 14.93c-.3-.149-1.77-.874-2.043-.974-.274-.1-.474-.149-.674.149-.2.3-.773.974-.948 1.174-.175.2-.35.225-.65.075-1.02-.513-1.861-.944-2.585-1.57-.611-.528-1.018-1.18-1.138-1.381-.12-.2-.013-.308.087-.407.091-.089.2-.23.3-.346.1-.115.133-.198.2-.329.066-.134.034-.251-.017-.35-.05-.1-.474-1.144-.65-1.564-.171-.414-.343-.358-.474-.364-.121-.005-.26-.006-.4-.006s-.369.052-.562.26c-.193.207-.738.722-.738 1.761s.756 2.04 1.861 2.522c1.105.482 1.919 1.816 3.411 2.46.36.155.721.215 1.058.118.375-.108 1.77-.724 2.02-1.417.249-.693.249-1.288.174-1.415-.074-.124-.273-.223-.573-.372z"/></svg>
-                ವಾಟ್ಸಾಪ್ ಮೂಲಕ ಕಳುಹಿಸಿ
+                ಬುಕ್ಕಿಂಗ್ ಕಳುಹಿಸಿ
             </button>
         </div>
     </div>
 </div>
 
 <script>
-// Set default date to tomorrow
 window.addEventListener('DOMContentLoaded', () => {
     const today = new Date();
     const tomorrow = new Date(today);
@@ -417,7 +403,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function openPopup(){
     document.getElementById("popup").style.display = "flex";
-    document.body.style.overflow = "hidden"; // Prevent background scrolling
+    document.body.style.overflow = "hidden"; 
 }
 
 function closePopup(){
@@ -427,7 +413,6 @@ function closePopup(){
 
 let personCount = 1;
 
-/* ADD PERSON BLOCK */
 function addPerson(){
     personCount++;
     let container = document.getElementById("personContainer");
@@ -442,9 +427,9 @@ function addPerson(){
         </div>
         
         <label>ಹೆಸರು</label>
-        <input type="text" class="name" placeholder="ಹೆಸರು ನಮೂದಿಸಿ">
+        <input type="text" class="name" placeholder="ಭಕ್ತಿಯ ಹೆಸರು ನಮೂದಿಸಿ" required>
 
-        <label>ರಾಶಿ <span class="optional">(optional)</span></label>
+        <label>ರಾಶಿ <span class="optional">(ಐಚ್ಛಿಕ)</span></label>
         <select class="rashi">
             <option value="ತಿಳಿಸಿಲ್ಲ">ಆಯ್ಕೆ ಮಾಡಿ</option>
             <option>ಮೇಷ</option>
@@ -461,11 +446,11 @@ function addPerson(){
             <option>ಮೀನ</option>
         </select>
 
-        <label>ನಕ್ಷತ್ರ <span class="optional">(optional)</span></label>
+        <label>ನಕ್ಷತ್ರ <span class="optional">(ಐಚ್ಛಿಕ)</span></label>
         <select class="nakshatra">
             <option value="ತಿಳಿಸಿಲ್ಲ">ಆಯ್ಕೆ ಮಾಡಿ</option>
             <option>ಅಶ್ವಿನಿ</option>
-            <option>ഭരണိ</option>
+            <option>ಭರಣಿ</option>
             <option>ಕೃತಿಕಾ</option>
             <option>ರೋಹಿಣಿ</option>
             <option>ಮೃಗಶಿರ</option>
@@ -479,9 +464,13 @@ function addPerson(){
         </select>
     `;
     container.appendChild(div);
+    
+    // Smooth scroll down to the new block added
+    setTimeout(() => {
+        div.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 50);
 }
 
-/* REMOVE PERSON BLOCK */
 function removePerson(id) {
     const element = document.getElementById(`personBlock_${id}`);
     if(element) {
@@ -490,7 +479,6 @@ function removePerson(id) {
     }
 }
 
-/* FIX INDEXING NUMBERS AFTER A REMOVAL */
 function reindexPersons() {
     const blocks = document.querySelectorAll('#personContainer .person');
     personCount = 0;
@@ -507,12 +495,10 @@ function reindexPersons() {
     });
 }
 
-/* WHATSAPP SUBMIT */
 function sendWhatsApp(){
     let pooja = document.getElementById("pooja").value;
     let rawDate = document.getElementById("poojaDate").value;
     
-    // Format date beautifully for message
     let formattedDate = rawDate;
     if(rawDate) {
         const d = new Date(rawDate);
@@ -523,9 +509,8 @@ function sendWhatsApp(){
     let rashi = document.querySelectorAll(".rashi");
     let nakshatra = document.querySelectorAll(".nakshatra");
 
-    // Form Validation
     if(!names[0] || names[0].value.trim() === "") {
-        alert("ದಯವಿಟ್ಟು ಕನಿಷ್ಠ ಮೊದಲ ವ್ಯಕ್ತಿಯ ಹೆಸರನ್ನು ನಮೂದಿಸಿ.");
+        alert("ದಯವಿಟ್ಟು ಮೊದಲ ವ್ಯಕ್ತಿಯ ಹೆಸರನ್ನು ನಮೂದಿಸಿ.");
         return;
     }
     if(!rawDate) {
@@ -538,7 +523,9 @@ function sendWhatsApp(){
     message += "📅 *ದಿನಾಂಕ:* " + encodeURIComponent(formattedDate) + "%0A%0A";
 
     for(let i=0; i<names.length; i++){
-        let pName = names[i].value.trim() || "ತಿಳಿಸಿಲ್ಲ";
+        let pName = names[i].value.trim();
+        if(!pName) continue; // Skip empty blocks if any accidentally happen
+
         let pRashi = rashi[i].value;
         let pNakshatra = nakshatra[i].value;
 
